@@ -283,16 +283,22 @@ public class CashShop {
         }
 
         try (Connection con = DatabaseConnection.getConnection()) {
-            try (PreparedStatement ps = con.prepareStatement("SELECT `nxCredit`, `maplePoint`, `nxPrepaid` FROM `accounts` WHERE `id` = ?")) {
-                ps.setInt(1, accountId);
+            if (!YamlConfig.config.server.USE_INFINITY_CASH) {
+                try (PreparedStatement ps = con.prepareStatement("SELECT `nxCredit`, `maplePoint`, `nxPrepaid` FROM `accounts` WHERE `id` = ?")) {
+                    ps.setInt(1, accountId);
 
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        this.nxCredit = rs.getInt("nxCredit");
-                        this.maplePoint = rs.getInt("maplePoint");
-                        this.nxPrepaid = rs.getInt("nxPrepaid");
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            this.nxCredit = rs.getInt("nxCredit");
+                            this.maplePoint = rs.getInt("maplePoint");
+                            this.nxPrepaid = rs.getInt("nxPrepaid");
+                        }
                     }
                 }
+            } else {
+                this.nxCredit = Integer.MAX_VALUE;
+                this.maplePoint = Integer.MAX_VALUE;
+                this.nxPrepaid = Integer.MAX_VALUE;
             }
 
             for (Pair<Item, InventoryType> item : factory.loadItems(accountId, false)) {
@@ -325,6 +331,9 @@ public class CashShop {
     }
 
     public void gainCash(int type, int cash) {
+        if (YamlConfig.config.server.USE_INFINITY_CASH)
+            return;
+
         switch (type) {
             case 1:
                 nxCredit += cash;
@@ -484,12 +493,14 @@ public class CashShop {
     }
 
     public void save(Connection con) throws SQLException {
-        try (PreparedStatement ps = con.prepareStatement("UPDATE `accounts` SET `nxCredit` = ?, `maplePoint` = ?, `nxPrepaid` = ? WHERE `id` = ?")) {
-            ps.setInt(1, nxCredit);
-            ps.setInt(2, maplePoint);
-            ps.setInt(3, nxPrepaid);
-            ps.setInt(4, accountId);
-            ps.executeUpdate();
+        if (!YamlConfig.config.server.USE_INFINITY_CASH) {
+            try (PreparedStatement ps = con.prepareStatement("UPDATE `accounts` SET `nxCredit` = ?, `maplePoint` = ?, `nxPrepaid` = ? WHERE `id` = ?")) {
+                ps.setInt(1, nxCredit);
+                ps.setInt(2, maplePoint);
+                ps.setInt(3, nxPrepaid);
+                ps.setInt(4, accountId);
+                ps.executeUpdate();
+            }
         }
 
         List<Pair<Item, InventoryType>> itemsWithType = new ArrayList<>();
