@@ -26,6 +26,9 @@ import client.inventory.InventoryType;
 import client.inventory.Pet;
 import client.inventory.manipulator.InventoryManipulator;
 import constants.id.ItemId;
+import constants.skills.Beginner;
+import constants.skills.Legend;
+import constants.skills.Noblesse;
 import provider.DataProvider;
 import provider.DataProviderFactory;
 import provider.DataTool;
@@ -72,7 +75,11 @@ public class SpawnPetProcessor {
                 if (chr.getPetIndex(pet) != -1) {
                     chr.unequipPet(pet, true);
                 } else {
-                    if (chr.getSkillLevel(SkillFactory.getSkill(8)) == 0 && chr.getPet(0) != null) {
+                    if (chr.getPet(0) != null
+                        && chr.getSkillLevel(SkillFactory.getSkill(Beginner.FOLLOW_THE_LEADER)) == 0
+                        && chr.getSkillLevel(SkillFactory.getSkill(Noblesse.FOLLOW_THE_LEADER)) == 0
+                        && chr.getSkillLevel(SkillFactory.getSkill(Legend.FOLLOW_THE_LEADER)) == 0
+                    ) {
                         chr.unequipPet(chr.getPet(0), false);
                     }
                     if (lead) {
