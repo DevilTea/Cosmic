@@ -56,14 +56,14 @@ public class GachaCommand extends Command {
             }
             return;
         }
-        String talkStr = "The #b" + gachaName + "#k Gachapon contains the following items.\r\n\r\n";
+        StringBuilder talkStr = new StringBuilder("The #b" + gachaName + "#k Gachapon contains the following items.\r\n\r\n");
         for (int i = 0; i < 2; i++) {
             for (int id : gacha.getItems(i)) {
-                talkStr += "-" + ItemInformationProvider.getInstance().getName(id) + "\r\n";
+                talkStr.append("- #i").append(id).append(":# #t").append(id).append("#\r\n");
             }
         }
-        talkStr += "\r\nPlease keep in mind that there are items that are in all gachapons and are not listed here.";
+        talkStr.append("\r\nPlease keep in mind that there are items that are in all gachapons and are not listed here.");
 
-        c.getAbstractPlayerInteraction().npcTalk(NpcId.MAPLE_ADMINISTRATOR, talkStr);
+        c.getAbstractPlayerInteraction().npcTalk(NpcId.MAPLE_ADMINISTRATOR, talkStr.toString());
     }
 }
