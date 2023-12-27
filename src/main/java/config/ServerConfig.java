@@ -320,4 +320,6 @@ public class ServerConfig {
     public Map<String, String> NPCS_SCRIPTABLE = new HashMap<>();
 
     public boolean USE_INFINITY_CASH;
+
+    public boolean FORCE_MULTI_PET;
 }

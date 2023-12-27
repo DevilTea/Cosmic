@@ -475,3 +475,6 @@ server:
 
     # Infinity Cash
     USE_INFINITY_CASH: true
+
+    # Enable multiple pets without skill
+    FORCE_MULTI_PETS: false

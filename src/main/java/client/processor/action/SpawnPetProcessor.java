@@ -25,6 +25,8 @@ import client.SkillFactory;
 import client.inventory.InventoryType;
 import client.inventory.Pet;
 import client.inventory.manipulator.InventoryManipulator;
+import config.ServerConfig;
+import config.YamlConfig;
 import constants.id.ItemId;
 import constants.skills.Beginner;
 import constants.skills.Legend;
@@ -79,6 +81,7 @@ public class SpawnPetProcessor {
                         && chr.getSkillLevel(SkillFactory.getSkill(Beginner.FOLLOW_THE_LEADER)) == 0
                         && chr.getSkillLevel(SkillFactory.getSkill(Noblesse.FOLLOW_THE_LEADER)) == 0
                         && chr.getSkillLevel(SkillFactory.getSkill(Legend.FOLLOW_THE_LEADER)) == 0
+                        && !YamlConfig.config.server.FORCE_MULTI_PET
                     ) {
                         chr.unequipPet(chr.getPet(0), false);
                     }
