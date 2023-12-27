@@ -321,5 +321,5 @@ public class ServerConfig {
 
     public boolean USE_INFINITY_CASH;
 
-    public boolean FORCE_MULTI_PET;
+    public boolean FORCE_MULTI_PETS;
 }
