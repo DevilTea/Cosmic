@@ -80,9 +80,10 @@ public class SpawnPetProcessor {
                         && chr.getSkillLevel(SkillFactory.getSkill(Beginner.FOLLOW_THE_LEADER)) == 0
                         && chr.getSkillLevel(SkillFactory.getSkill(Noblesse.FOLLOW_THE_LEADER)) == 0
                         && chr.getSkillLevel(SkillFactory.getSkill(Legend.FOLLOW_THE_LEADER)) == 0
-                        && !YamlConfig.config.server.FORCE_MULTI_PETS
                     ) {
-                        chr.unequipPet(chr.getPet(0), false);
+                        chr.changeSkillLevel(SkillFactory.getSkill(Beginner.FOLLOW_THE_LEADER), (byte) 1, (byte) 1, (long) -1);
+                        chr.changeSkillLevel(SkillFactory.getSkill(Noblesse.FOLLOW_THE_LEADER), (byte) 1, (byte) 1, (long) -1);
+                        chr.changeSkillLevel(SkillFactory.getSkill(Legend.FOLLOW_THE_LEADER), (byte) 1, (byte) 1, (long) -1);
                     }
                     if (lead) {
                         chr.shiftPetsRight();
