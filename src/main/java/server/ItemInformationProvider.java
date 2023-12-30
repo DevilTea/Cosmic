@@ -194,21 +194,6 @@ public class ItemInformationProvider {
         return itemPairs;
     }
 
-    public List<Pair<Integer, String>> getAllEtcItems() {
-        if (!itemNameCache.isEmpty()) {
-            return itemNameCache;
-        }
-
-        List<Pair<Integer, String>> itemPairs = new ArrayList<>();
-        Data itemsData;
-
-        itemsData = stringData.getData("Etc.img").getChildByPath("Etc");
-        for (Data itemFolder : itemsData.getChildren()) {
-            itemPairs.add(new Pair<>(Integer.parseInt(itemFolder.getName()), DataTool.getString("name", itemFolder, "NO-NAME")));
-        }
-        return itemPairs;
-    }
-
     private Data getStringData(int itemId) {
         String cat = "null";
         Data theData;
