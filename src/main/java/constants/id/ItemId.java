@@ -59,12 +59,9 @@ public class ItemId {
 
     // Chair
     public static final int RELAXER = 3010000;
-    private static final int CHAIR_MIN = RELAXER;
-    private static final int CHAIR_MAX = FISHING_CHAIR;
 
     public static boolean isChair(int itemId) {
-        return itemId >= CHAIR_MIN && itemId <= CHAIR_MAX;
-        // alt: return itemId / 10000 == 301;
+        return itemId / 10000 == 301;
     }
 
     // Throwing star
@@ -72,23 +69,19 @@ public class ItemId {
     public static final int HWABI_THROWING_STARS = 2070007;
     public static final int BALANCED_FURY = 2070018;
     public static final int CRYSTAL_ILBI_THROWING_STARS = 2070016;
-    private static final int THROWING_STAR_MIN = SUBI_THROWING_STARS;
-    private static final int THROWING_STAR_MAX = 2070016;
-    public static final int DEVIL_RAIN_THROWING_STAR = 2070014;
 
-    public static int[] allThrowingStarIds() {
-        return IntStream.range(THROWING_STAR_MIN, THROWING_STAR_MAX + 1).toArray();
+    public static boolean isThrowingStar(int itemId) {
+        int itemType = itemId / 10000;
+        return itemType == 207;
     }
 
     // Bullet
     public static final int BULLET = 2330000;
-    private static final int BULLET_MIN = BULLET;
-    private static final int BULLET_MAX = 2330005;
     public static final int BLAZE_CAPSULE = 2331000;
     public static final int GLAZE_CAPSULE = 2332000;
-
-    public static int[] allBulletIds() {
-        return IntStream.range(BULLET_MIN, BULLET_MAX + 1).toArray();
+    public static boolean isBullet(int itemId) {
+        int itemType = itemId / 10000;
+        return itemType == 233;
     }
 
     // Starter

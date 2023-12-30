@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tools.DatabaseConnection;
 import tools.PacketCreator;
+import tools.Pair;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,16 +56,13 @@ public class Shop {
     private final int tokenvalue = 1000000000;
     private final int token = ItemId.GOLDEN_MAPLE_LEAF;
 
+    // load rechargeableItems
     static {
-        for (int throwingStarId : ItemId.allThrowingStarIds()) {
-            rechargeableItems.add(throwingStarId);
-        }
-        rechargeableItems.add(ItemId.BLAZE_CAPSULE);
-        rechargeableItems.add(ItemId.GLAZE_CAPSULE);
-        rechargeableItems.add(ItemId.BALANCED_FURY);
-        rechargeableItems.remove(ItemId.DEVIL_RAIN_THROWING_STAR); // doesn't exist
-        for (int bulletId : ItemId.allBulletIds()) {
-            rechargeableItems.add(bulletId);
+        for(Pair<Integer, String> item : ItemInformationProvider.getInstance().getAllItems()) {
+            int itemId = item.getLeft();
+            if (ItemId.isThrowingStar(itemId) || ItemId.isBullet(itemId)) {
+                rechargeableItems.add(itemId);
+            }
         }
     }
 
